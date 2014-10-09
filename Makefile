@@ -6,10 +6,9 @@ script = linker_script.ld
 target = proc_asm.o kernel_asm.o proc_c.o kernel.o io.o string.o idt.o exception.o  
 flags = -Wall -Werror -nostdinc -m32 -c -g -fno-builtin -I$(inc_dir)  # -g for debugging information. 
 comp = g++
-REDIRECT = > /dev/null 2>&1
 sys_obj = proc_asm.o $(lib_dir)/proc_c.o kernel_asm.o kernel.o $(lib_dir)/io.o $(lib_dir)/string.o $(lib_dir)/idt.o $(lib_dir)/exception.o  
 all: $(target) 
-	ld -m elf_i386  -t $(script) -o kernel $(sys_obj) -nostdlib -Map os.map
+	ld -m elf_i386  -t $(script) -o kernel.bin $(sys_obj) -nostdlib -Map os.map -Ttext 0x7e00
 	qemu-system-i386 -s -kernel kernel.bin 
 
 proc_asm.o: processor.asm 
@@ -35,3 +34,4 @@ exception.o: $(lib_dir)/exception.c
 clean:
 	rm -v $(lib_dir)/*.o 
 	rm -v *.o 
+	rm -v kernel.bin
