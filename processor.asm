@@ -14,8 +14,10 @@ global get_ip
 global enable_interrupts
 global disable_interrupts
 global enable_protected_mode 
+global check_if_protected_mode 
 global isr0
 global isr8
+global get_cr0
 extern idtp
 enable_protected_mode:
 	mov eax, cr0
@@ -31,9 +33,9 @@ get_ax:
 	call get_ax_a
 	pop ax 
 get_eax:
-	push ebx
+	push eax
 	call get_eax_a
-	pop ebx
+	pop eax
 idt_load:
 	lidt [idtp]
 	ret
@@ -69,6 +71,11 @@ get_cs: 			; Arguments need to be passed in reverse order.
 	call get_cs_a
 	pop eax
 	ret
+check_if_protected_mode:
+	mov eax, cr0 
+	and eax, 1
+	ret 
+
 
 
 	

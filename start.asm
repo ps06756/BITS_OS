@@ -30,7 +30,7 @@ _start:
 	mov eax, kernel_main 
 	call eax 
 	; Keep looping forever  
-	cli ; Disable the interrupts. 
+	cli ; Disable the interrupts.  
 	jmp $ 
 
 
