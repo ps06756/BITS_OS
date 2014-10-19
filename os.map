@@ -2,17 +2,11 @@
 Discarded input sections
 
  .note.GNU-stack
-                0x0000000000000000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
- .note.GNU-stack
                 0x0000000000000000        0x0 kernel.o
- .note.GNU-stack
-                0x0000000000000000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
  .note.GNU-stack
                 0x0000000000000000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
  .note.GNU-stack
-                0x0000000000000000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
- .note.GNU-stack
-                0x0000000000000000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+                0x0000000000000000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
 
 Memory Configuration
 
@@ -23,14 +17,10 @@ Linker script and memory map
 
 LOAD linker_script.ld
                 0x0000000000100000                . = 0x100000
-LOAD proc_asm.o
-LOAD /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
 LOAD kernel_asm.o
 LOAD kernel.o
-LOAD /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
 LOAD /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
-LOAD /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
-LOAD /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+LOAD /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
 Address of section .text set to 0x7e00
                 0x0000000008048000                PROVIDE (__executable_start, 0x8048000)
                 0x0000000008048094                . = (0x8048000 + SIZEOF_HEADERS)
@@ -65,7 +55,7 @@ Address of section .text set to 0x7e00
 .rel.dyn        0x0000000008048094        0x0
  *(.rel.init)
  *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
- .rel.text      0x0000000000000000        0x0 proc_asm.o
+ .rel.text      0x0000000000000000        0x0 kernel_asm.o
  *(.rel.fini)
  *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
  *(.rel.data.rel.ro .rel.data.rel.ro.* .rel.gnu.linkonce.d.rel.ro.*)
@@ -78,13 +68,13 @@ Address of section .text set to 0x7e00
  *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
  *(.rel.ifunc)
  .rel.multiboot
-                0x0000000000000000        0x0 proc_asm.o
+                0x0000000000000000        0x0 kernel_asm.o
 
 .rel.plt        0x0000000008048094        0x0
  *(.rel.plt)
                 0x0000000008048094                PROVIDE (__rel_iplt_start, .)
  *(.rel.iplt)
- .rel.iplt      0x0000000000000000        0x0 proc_asm.o
+ .rel.iplt      0x0000000000000000        0x0 kernel_asm.o
                 0x0000000008048094                PROVIDE (__rel_iplt_end, .)
 
 .init
@@ -93,82 +83,54 @@ Address of section .text set to 0x7e00
 .plt            0x00000000080480a0        0x0
  *(.plt)
  *(.iplt)
- .iplt          0x0000000000000000        0x0 proc_asm.o
+ .iplt          0x0000000000000000        0x0 kernel_asm.o
 
-.text           0x0000000000008000      0xa14
+.text           0x0000000000008000      0x6fc
  *(.text.unlikely .text.*_unlikely .text.unlikely.*)
  *(.text.exit .text.exit.*)
  *(.text.startup .text.startup.*)
  *(.text.hot .text.hot.*)
  *(.text .stub .text.* .gnu.linkonce.t.*)
- .text          0x0000000000008000       0x61 proc_asm.o
-                0x0000000000008000                enable_protected_mode
-                0x0000000000008009                get_breg
-                0x0000000000008010                get_ax
-                0x0000000000008019                get_eax
-                0x0000000000008020                idt_load
-                0x0000000000008028                enable_interrupts
-                0x000000000000802a                disable_interrupts
-                0x000000000000802c                isr0
-                0x0000000000008036                isr8
-                0x0000000000008040                get_ip
-                0x000000000000804a                get_cs
-                0x000000000000805a                check_if_protected_mode
- .text          0x0000000000008061       0xb8 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
-                0x0000000000008061                get_breg_a
-                0x00000000000080a6                get_ax_a
-                0x00000000000080c1                get_eax_a
-                0x00000000000080d4                get_cs_a
-                0x0000000000008106                get_ip_a
- *fill*         0x0000000000008119        0x7 
- .text          0x0000000000008120        0x0 kernel_asm.o
- .text          0x0000000000008120       0xa3 kernel.o
-                0x0000000000008120                kernel_main
- .text          0x00000000000081c3      0x5ec /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
-                0x00000000000081c3                move_csr()
-                0x000000000000823e                cls()
-                0x00000000000082b4                scroll()
-                0x000000000000835d                inportb(unsigned short)
-                0x000000000000837a                outportb(unsigned short, unsigned char)
-                0x0000000000008398                putch(unsigned char)
-                0x00000000000084f7                init_video()
-                0x000000000000850e                print(int)
-                0x0000000000008589                print(unsigned int)
-                0x00000000000085da                print(long)
-                0x0000000000008655                print(float)
-                0x00000000000086ca                print(double)
-                0x000000000000876f                print(char const*)
- .text          0x00000000000087af       0xc6 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
-                0x00000000000087af                memcpy(void*, void const*, unsigned int)
-                0x00000000000087e9                memset(void*, char, unsigned int)
-                0x000000000000881b                memsetw(unsigned short*, unsigned short, unsigned int)
-                0x000000000000884f                strlen(char const*)
- .text          0x0000000000008875       0xf6 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
-                0x0000000000008875                idt_set_gate(unsigned char, unsigned long, unsigned short, unsigned char)
-                0x00000000000088dc                idt_install()
- .text          0x000000000000896b       0x82 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
-                0x000000000000896b                divide_by_zero
-                0x00000000000089a3                double_fault
+ .text          0x0000000000008000        0x0 kernel_asm.o
+ .text          0x0000000000008000       0x25 kernel.o
+                0x0000000000008000                kernel_main
+ .text          0x0000000000008025       0xc6 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+                0x0000000000008025                memcpy(void*, void const*, unsigned int)
+                0x000000000000805f                memset(void*, char, unsigned int)
+                0x0000000000008091                memsetw(unsigned short*, unsigned short, unsigned int)
+                0x00000000000080c5                strlen(char const*)
+ .text          0x00000000000080eb      0x5ec /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
+                0x00000000000080eb                move_csr()
+                0x0000000000008166                cls()
+                0x00000000000081dc                scroll()
+                0x0000000000008285                inportb(unsigned short)
+                0x00000000000082a2                outportb(unsigned short, unsigned char)
+                0x00000000000082c0                putch(unsigned char)
+                0x000000000000841f                init_video()
+                0x0000000000008436                print(int)
+                0x00000000000084b1                print(unsigned int)
+                0x0000000000008502                print(long)
+                0x000000000000857d                print(float)
+                0x00000000000085f2                print(double)
+                0x0000000000008697                print(char const*)
  *(.gnu.warning)
  *(.multiboot)
- *fill*         0x00000000000089ed        0x3 
- .multiboot     0x00000000000089f0       0x24 kernel_asm.o
-                0x0000000000008a08                _start
+ *fill*         0x00000000000086d7        0x1 
+ .multiboot     0x00000000000086d8       0x24 kernel_asm.o
+                0x00000000000086f0                _start
  *(.text)
 
 .fini
  *(SORT(.fini))
-                0x0000000000008a14                PROVIDE (__etext, .)
-                0x0000000000008a14                PROVIDE (_etext, .)
-                0x0000000000008a14                PROVIDE (etext, .)
+                0x00000000000086fc                PROVIDE (__etext, .)
+                0x00000000000086fc                PROVIDE (_etext, .)
+                0x00000000000086fc                PROVIDE (etext, .)
 
-.rodata         0x0000000000009000       0xcb
+.rodata         0x0000000000009000       0x38
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x0000000000009000        0x2 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
- .rodata        0x0000000000009002       0x74 kernel.o
- *fill*         0x0000000000009076        0x2 
- .rodata        0x0000000000009078       0x10 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
- .rodata        0x0000000000009088       0x43 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+ .rodata        0x0000000000009000       0x23 kernel.o
+ *fill*         0x0000000000009023        0x5 
+ .rodata        0x0000000000009028       0x10 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
  *(.rodata)
 
 .rodata1
@@ -177,27 +139,21 @@ Address of section .text set to 0x7e00
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x00000000000090cc      0x380
+.eh_frame       0x0000000000009038      0x260
  *(.eh_frame)
- .eh_frame      0x00000000000090cc       0xb8 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
- .eh_frame      0x0000000000009184       0x20 kernel.o
-                                         0x38 (size before relaxing)
- .eh_frame      0x00000000000091a4      0x1a8 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
-                                        0x1c0 (size before relaxing)
- .eh_frame      0x000000000000934c       0x80 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+ .eh_frame      0x0000000000009038       0x38 kernel.o
+ .eh_frame      0x0000000000009070       0x80 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
                                          0x98 (size before relaxing)
- .eh_frame      0x00000000000093cc       0x40 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
-                                         0x58 (size before relaxing)
- .eh_frame      0x000000000000940c       0x40 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
-                                         0x58 (size before relaxing)
+ .eh_frame      0x00000000000090f0      0x1a8 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
+                                        0x1c0 (size before relaxing)
 
 .gcc_except_table
  *(.gcc_except_table .gcc_except_table.*)
 
 .exception_ranges
  *(.exception_ranges .exception_ranges*)
-                0x000000000000944c                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
-                0x000000000000a44c                . = DATA_SEGMENT_ALIGN (0x1000, 0x1000)
+                0x0000000000009298                . = (ALIGN (0x1000) - ((0x1000 - .) & 0xfff))
+                0x000000000000a000                . = DATA_SEGMENT_ALIGN (0x1000, 0x1000)
 
 .eh_frame
  *(.eh_frame)
@@ -215,22 +171,22 @@ Address of section .text set to 0x7e00
  *(.tbss .tbss.* .gnu.linkonce.tb.*)
  *(.tcommon)
 
-.preinit_array  0x000000000000a44c        0x0
-                0x000000000000a44c                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x000000000000a000        0x0
+                0x000000000000a000                PROVIDE (__preinit_array_start, .)
  *(.preinit_array)
-                0x000000000000a44c                PROVIDE (__preinit_array_end, .)
+                0x000000000000a000                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x000000000000a44c        0x0
-                0x000000000000a44c                PROVIDE (__init_array_start, .)
+.init_array     0x000000000000a000        0x0
+                0x000000000000a000                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*) SORT(.ctors.*))
  *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
-                0x000000000000a44c                PROVIDE (__init_array_end, .)
+                0x000000000000a000                PROVIDE (__init_array_end, .)
 
-.fini_array     0x000000000000a44c        0x0
-                0x000000000000a44c                PROVIDE (__fini_array_start, .)
+.fini_array     0x000000000000a000        0x0
+                0x000000000000a000                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*) SORT(.dtors.*))
  *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
-                0x000000000000a44c                PROVIDE (__fini_array_end, .)
+                0x000000000000a000                PROVIDE (__fini_array_end, .)
 
 .ctors
  *crtbegin.o(.ctors)
@@ -259,68 +215,56 @@ Address of section .text set to 0x7e00
 .got
  *(.got)
  *(.igot)
-                0x000000000000a44c                . = DATA_SEGMENT_RELRO_END (., (SIZEOF (.got.plt) >= 0xc)?0xc:0x0)
+                0x000000000000a000                . = DATA_SEGMENT_RELRO_END (., (SIZEOF (.got.plt) >= 0xc)?0xc:0x0)
 
-.got.plt        0x000000000000a44c        0x0
+.got.plt        0x000000000000a000        0x0
  *(.got.plt)
  *(.igot.plt)
- .igot.plt      0x0000000000000000        0x0 proc_asm.o
+ .igot.plt      0x0000000000000000        0x0 kernel_asm.o
 
-.data           0x000000000000b000        0x4
+.data           0x000000000000a000        0x4
  *(.data .data.* .gnu.linkonce.d.*)
- .data          0x000000000000b000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
- .data          0x000000000000b000        0x0 kernel.o
- .data          0x000000000000b000        0x4 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
-                0x000000000000b000                attrib
- .data          0x000000000000b004        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
- .data          0x000000000000b004        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
- .data          0x000000000000b004        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+ .data          0x000000000000a000        0x0 kernel.o
+ .data          0x000000000000a000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+ .data          0x000000000000a000        0x4 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
+                0x000000000000a000                attrib
  *(.data)
 
 .data1
  *(.data1)
-                0x000000000000b004                _edata = .
-                0x000000000000b004                PROVIDE (edata, .)
-                0x000000000000b004                . = .
-                0x000000000000b004                __bss_start = .
+                0x000000000000a004                _edata = .
+                0x000000000000a004                PROVIDE (edata, .)
+                0x000000000000a004                . = .
+                0x000000000000a004                __bss_start = .
 
-.bss            0x000000000000c000      0x848
+.bss            0x000000000000b000        0xc
  *(.dynbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss           0x000000000000c000       0x20 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
-                0x000000000000c000                reg_val
- .bss           0x000000000000c020        0x0 kernel.o
- .bss           0x000000000000c020        0xc /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
-                0x000000000000c020                textmemptr
-                0x000000000000c024                csr_x
-                0x000000000000c028                csr_y
- .bss           0x000000000000c02c        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
- *fill*         0x000000000000c02c       0x14 
- .bss           0x000000000000c040      0x806 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
-                0x000000000000c040                idt
-                0x000000000000c840                idtp
- .bss           0x000000000000c846        0x2 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
-                0x000000000000c846                exception_nested
+ .bss           0x000000000000b000        0x0 kernel.o
+ .bss           0x000000000000b000        0x0 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+ .bss           0x000000000000b000        0xc /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
+                0x000000000000b000                textmemptr
+                0x000000000000b004                csr_x
+                0x000000000000b008                csr_y
  *(COMMON)
-                0x000000000000c848                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x000000000000b00c                . = ALIGN ((. != 0x0)?0x4:0x1)
  *(COMMON)
  *(.bss)
  *(.bootstrap_stack)
-                0x000000000000c848                . = ALIGN (0x4)
-                0x000000000000c848                . = SEGMENT_START ("ldata-segment", .)
-                0x000000000000c848                . = ALIGN (0x4)
-                0x000000000000c848                _end = .
-                0x000000000000c848                PROVIDE (end, .)
-                0x000000000000c848                . = DATA_SEGMENT_END (.)
+                0x000000000000b00c                . = ALIGN (0x4)
+                0x000000000000b00c                . = SEGMENT_START ("ldata-segment", .)
+                0x000000000000b00c                . = ALIGN (0x4)
+                0x000000000000b00c                _end = .
+                0x000000000000b00c                PROVIDE (end, .)
+                0x000000000000b00c                . = DATA_SEGMENT_END (.)
 
-.stab           0x0000000000000000      0x240
+.stab           0x0000000000000000        0xc
  *(.stab)
- .stab          0x0000000000000000      0x234 proc_asm.o
- .stab          0x0000000000000234        0xc kernel_asm.o
+ .stab          0x0000000000000000        0xc kernel_asm.o
 
-.stabstr        0x0000000000000000        0xf
+.stabstr        0x0000000000000000        0x1
  *(.stabstr)
- .stabstr       0x0000000000000000        0xf proc_asm.o
+ .stabstr       0x0000000000000000        0x1 kernel_asm.o
 
 .stab.excl
  *(.stab.excl)
@@ -336,13 +280,10 @@ Address of section .text set to 0x7e00
 
 .comment        0x0000000000000000       0x24
  *(.comment)
- .comment       0x0000000000000000       0x24 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
+ .comment       0x0000000000000000       0x24 kernel.o
                                          0x25 (size before relaxing)
- .comment       0x0000000000000000       0x25 kernel.o
- .comment       0x0000000000000000       0x25 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
  .comment       0x0000000000000000       0x25 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
- .comment       0x0000000000000000       0x25 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
- .comment       0x0000000000000000       0x25 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+ .comment       0x0000000000000000       0x25 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
 
 .debug
  *(.debug)
@@ -356,68 +297,46 @@ Address of section .text set to 0x7e00
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x0000000000000000       0xc0
+.debug_aranges  0x0000000000000000       0x60
  *(.debug_aranges)
  .debug_aranges
-                0x0000000000000000       0x20 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
+                0x0000000000000000       0x20 kernel.o
  .debug_aranges
-                0x0000000000000020       0x20 kernel.o
+                0x0000000000000020       0x20 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
  .debug_aranges
                 0x0000000000000040       0x20 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
- .debug_aranges
-                0x0000000000000060       0x20 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
- .debug_aranges
-                0x0000000000000080       0x20 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
- .debug_aranges
-                0x00000000000000a0       0x20 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000      0x97a
+.debug_info     0x0000000000000000      0x57d
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x0000000000000000      0x182 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
- .debug_info    0x0000000000000182       0x53 kernel.o
- .debug_info    0x00000000000001d5      0x383 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
- .debug_info    0x0000000000000558      0x1c3 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
- .debug_info    0x000000000000071b      0x15e /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
- .debug_info    0x0000000000000879      0x101 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+ .debug_info    0x0000000000000000       0x37 kernel.o
+ .debug_info    0x0000000000000037      0x1c3 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+ .debug_info    0x00000000000001fa      0x383 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
 
-.debug_abbrev   0x0000000000000000      0x418
+.debug_abbrev   0x0000000000000000      0x1ee
  *(.debug_abbrev)
- .debug_abbrev  0x0000000000000000       0xa3 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
- .debug_abbrev  0x00000000000000a3       0x40 kernel.o
- .debug_abbrev  0x00000000000000e3      0x110 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
- .debug_abbrev  0x00000000000001f3       0xb4 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
- .debug_abbrev  0x00000000000002a7       0xe6 /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
- .debug_abbrev  0x000000000000038d       0x8b /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+ .debug_abbrev  0x0000000000000000       0x2a kernel.o
+ .debug_abbrev  0x000000000000002a       0xb4 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+ .debug_abbrev  0x00000000000000de      0x110 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
 
-.debug_line     0x0000000000000000      0x43d
+.debug_line     0x0000000000000000      0x20a
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x0000000000000000       0xb9 /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
- .debug_line    0x00000000000000b9       0x4a kernel.o
- .debug_line    0x0000000000000103      0x129 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
- .debug_line    0x000000000000022c       0xa7 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
- .debug_line    0x00000000000002d3       0xae /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
- .debug_line    0x0000000000000381       0xbc /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
+ .debug_line    0x0000000000000000       0x3a kernel.o
+ .debug_line    0x000000000000003a       0xa7 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+ .debug_line    0x00000000000000e1      0x129 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
 
 .debug_frame
  *(.debug_frame)
 
-.debug_str      0x0000000000000000      0x44d
+.debug_str      0x0000000000000000      0x2a0
  *(.debug_str)
- .debug_str     0x0000000000000000       0xce /home/pratik/My_Files/Projects/BITS_OS/lib/proc_c.o
-                                         0xdb (size before relaxing)
- .debug_str     0x00000000000000ce       0x5d kernel.o
-                                         0xba (size before relaxing)
- .debug_str     0x000000000000012b      0x156 /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
-                                        0x1d9 (size before relaxing)
- .debug_str     0x0000000000000281       0x9d /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
+ .debug_str     0x0000000000000000       0x8c kernel.o
+ .debug_str     0x000000000000008c       0xb5 /home/pratik/My_Files/Projects/BITS_OS/lib/string.o
                                         0x117 (size before relaxing)
- .debug_str     0x000000000000031e       0xcb /home/pratik/My_Files/Projects/BITS_OS/lib/idt.o
-                                        0x149 (size before relaxing)
- .debug_str     0x00000000000003e9       0x64 /home/pratik/My_Files/Projects/BITS_OS/lib/exception.o
-                                         0xc3 (size before relaxing)
+ .debug_str     0x0000000000000141      0x15f /home/pratik/My_Files/Projects/BITS_OS/lib/io.o
+                                        0x1d9 (size before relaxing)
 
 .debug_loc
  *(.debug_loc)
