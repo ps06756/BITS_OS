@@ -1,0 +1,2 @@
+The next target for our operating system is that we will be reading the core system utilities using disk access through BIOS with the help of initial ram disk system as it is there in the linux operating system. 
+After loading the core system utilites we will enable the protected mode and load the rest of the modules of the operating system. 
