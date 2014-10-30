@@ -9,12 +9,28 @@ mov esp, ebp
 ;-----------------------------------------------TELETYPE_SETUP-------------------------------------------------------------------;
 mov al, 'L'
 call p_char 
+call disk_status
 jmp $ 
 ;----------------------------------------------METHODS_DEFINED_HERE-------------------------------------------------------------;
+fail:
+	add ah, '0'
+	mov al, ah 
+	call p_char
+	ret
+suc:
+	mov al, 'S' 
+	call p_char 
+	ret 
 p_char:
 	mov ah, 0x0e
 	int 10h 
-
+	ret 
+disk_status: 
+	mov dl, 81h 
+	mov ah, 01  	
+	je suc
+	jne fail
+	ret
 msg db 'Hello World',0 
 ;-----------------------------------------------NULL_BYTES-----------------------------------------------------------------------;
 times 510 - ($ - $$) db 0
