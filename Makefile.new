@@ -1,0 +1,32 @@
+# This is the make file for the BITS_OS project.
+# -c options is doubtful in the flag variable.
+curr_dir = $(shell pwd)
+inc_dir = $(curr_dir)/include
+lib_dir = $(curr_dir)/lib
+target =  kernel.o io.o string.o     
+script = linker_script.ld 
+flags = -Wall -Werror -nostdinc -m32 -c -fno-builtin -I$(inc_dir) 
+comp = g++
+sys_obj = kernel.o $(lib_dir)/io.o $(lib_dir)/string.o   
+
+all: $(target) 
+	ld -m elf_i386  -t $(script) -o kernel.bin $(sys_obj) -nostdlib -Map os.map -Ttext 0x7e00
+	strip kernel.bin  # strip of all debug symbols (to be checked for commiting) 
+	cp kernel.bin kernel_plain.bin  # generate plain binary from kernel code (to be checked for commiting)  
+	objcopy kernel_plain.bin -O binary 
+	qemu-system-i386 kernel_plain.bin 
+
+kernel.o: bootsect.asm  
+	nasm -f elf bootsect.asm -o kernel.o 
+
+io.o: $(lib_dir)/io.c
+	$(comp) -o $(lib_dir)/io.o $(lib_dir)/io.c $(flags) 
+
+string.o: $(lib_dir)/string.c
+	$(comp) -o $(lib_dir)/string.o $(lib_dir)/string.c $(flags)
+
+
+clean:
+	rm -v $(lib_dir)/*.o 
+	rm -v *.o 
+	rm -v *.bin
